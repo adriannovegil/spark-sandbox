@@ -23,13 +23,6 @@ module Template
             vb.cpus = server_config['cpus'] || 2
             vb.memory = server_config['memory'] || 2048
 
-            # SSH settings
-            if server_config["ssh-pub-key"]
-              machine_instance.ssh.insert_key = false
-              machine_instance.vm.provision "file", source: server_config["ssh-pub-key"], destination: "~/.ssh/authorized_keys"
-              machine_instance.ssh.private_key_path = [server_config["ssh-prv-key"], "~/.vagrant.d/insecure_private_key"]
-            end
-
             # Configure the instance group
             if server_config["group"]
               vb.customize ["modifyvm", :id, "--groups", "/" + server_config["group"]]
@@ -41,6 +34,13 @@ module Template
             # http://stackoverflow.com/questions/19490652/how-to-sync-time-on-host-wake-up-within-virtualbox
             vb.customize [ "guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 10000 ]
             vb.gui = false
+          end
+
+          # SSH settings
+          if server_config["ssh-pub-key"]
+            machine_instance.ssh.insert_key = false
+            machine_instance.vm.provision "file", source: server_config["ssh-pub-key"], destination: "~/.ssh/authorized_keys"
+            machine_instance.ssh.private_key_path = [server_config["ssh-prv-key"], "~/.vagrant.d/insecure_private_key"]
           end
 
           # Configure the hostname
