@@ -13,8 +13,8 @@ sudo mkdir /scratch
 sudo chmod -R 777 /scratch/
 
 # Copy the configuration folder
-rm -Rf bdev-3.0/experiments
-cp -R /vagrant/files/bdev/experiments ./bdev-3.0/
+rm -Rf bdev-3.0/experiment
+cp -R /vagrant/files/bdev/experiment ./bdev-3.0/
 
 # Get the framework to the test.
 
