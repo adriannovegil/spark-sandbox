@@ -1,12 +1,11 @@
 # SparkPremer-BDE Sandbox
 
-Proyecto para aprovisionar un servidor de pruebas que ejecute un Jenkins sobre Docker.
+Proyecto para aprovisionar un entorno de pruebas para el desarrollo del algoritmo SparPremer.
 
-A continuación se pueden encontrar las instrucciones sobre como configurar y ejecutar el sandbox usando Virtualbox y [Vagrant](http://vagrantup.com).
+## Compatibilidad
 
-El objetivo del proyecto es contar con un entorno de pruebas automatizado lo más parecido al entorno de producción, desde el cual se puedan hacer pruebas tanto del entorno de ejecución como sobre la instalación de Jenkins, de forma controlada y realista.
-
-También se busca disponer de un entorno, en el que los usuarios que mantengan la librería de compilación, puedan hacerlo de forma cómoda y sin necesidad de complejos procesos de instalación y configuración para contar con las herramientas de desarrollo.
+ * [CentOS 7](https://www.centos.org/)
+ * [BDEv3](http://bdev.des.udc.es/)
 
 ## Creando el Sandbox
 
@@ -14,13 +13,6 @@ Lo primero que tenemos que hacer es clonar este repositório.
 
 ```
  $ git clone [REPO_URL]
-```
-
-Entramos a la carpeta del repositorio e inicializamos los submódulos de Git.
-
-```
- $ git submodule init
- $ git submodule update
 ```
 
 ## Configuramos el Entorno
@@ -128,68 +120,7 @@ A continuación se muestran los comandos más típicos necesarios para la gesti�
 | `$ vagrant halt [instance-id]`       | Parar la instancia                                |
 | `$ vagrant destroy [instance-id]`    | Destruir la instancia                             |
 
-## Configuración Base de Jenkins
+## Configuración del framework BDEv3
 
-A continuación se muestras las configuraciones típicas a realizar en nuestro servidor de Jenkins.
-
-### Registrar un Nuevo Slave
-
-Vamos a ver como configurar un nuevo slave en nuestro servidor Jenkins. En nuestro caso, la comunicación va a hacerse via SSH.
-
-#### Configuración de las Credenciales de Acceso
-
-Para poder conectarnos a cada uno de los slaves, antes de nada, es necesario configurar unas credenciales de acceso. Para hacer esto entramos en la interfaz de Jenkins y nos movemos a `Jenkins` `>` `Credentials` `>` `System` `>` `Global credentials`.
-
-Una vez ahí hacemos click en la opción `Add Credentials`.
-
-Seleccionamos la opción `SSH Username with private key`. A continuación se nos mostrará un formulario donde podremos introducir los datos de las nuevas credenciales.
-
-| Parámetro      |  Valor                                                          |
-| ---------------| --------------------------------------------------------------- |
-| `Scope`        | Global (Jenkins, nodes, items, all child items, etc)            |
-| `Username`     | jenkins                                                         |
-| `Private Key`  | `Enter directly`                                                |
-| `Key`          | Clave privada                                                   |
-
-A continuación se muestra una imagen donde se ilustra el resultado final de la configuración.
-
-![Jenkins agents](doc/pics/config-credentials.png)
-
-Por comodidad, y con el objetivo de configurar un entorno de pruebas, se adjunta en este repositorio una clave pública y privada para el acceso ssh. Esta misma clave ha sido preinyectada en los servidores slave, con lo que solamente debemos pegarla en el formulario  anterior y todo debería de funcionar sin más problemas.
-
-Las clasves se encuentran en el directorio `files/keys/id_rsa`.
-
-Es importante destacar que estas claves __NO__ se deben de utilizar para configuración en producción ya que, como se almacenan en un repositorio de código fuente de acceso público, están altamente comprometidas.
-
-#### Registro de un Nuevo Slave
-
-Una vez que tenemos disponibles las claves, es momento de dar de alta un nuevo slave.
-
-A través de la interfaz web de Jenkins nos movemos a la opción `Manage Jenkis` `>` `Manage Nodes` y ahí hacemos click en la opción `New node`.
-
-Ahí se nos pedirá que especifiquemos el nombre del nodo y el tipo de Agente. En el campo nombre tendremos que poner una cadena de caracteres que identifique el nodo que queremos dar de alta. En tipo de agente, seleccionamos `Permanent Agent`.
-
-Pulsamos `OK` y se nos mostrará un formulario para que indiquemos los datos del nuevo slave. Aquí especificamos (al menos) los siguientes datos:
-
-| Parámetro                 |  Valor                                                                 |
-| ------------------------- | ---------------------------------------------------------------------- |
-| `Nombre`                  | Nombre del slave. Se precarga con el valor indicado en el paso previo  |
-| `Descripción`             | Descripción del slave                                                  |
-| `Númer de ejecutores`     | Número de ejecutores concurrentes sobre el slave                       |
-| `Directorio raiz remoto`  | `/home/jenkins`                                                        |
-| `Etiquetas`               | Este campo es muy importante ya que usaremos estas etiquetas para indicar a los pipelines, en qué slaves si y en qué slaves no se pueden ejecutar. Podemos indicar una colección de cadenas de caracteres, en nuestro caso pondremos un único label con el valor `docker-slaves`|
-| `Usar`                    | `Utilizar este nodo tanto como sea posible`                            |
-| `Metodo de ejecución`     | `Arrancar agentes remotos en máquinas Unix vía SSH` Con esta opción indicamos que la conexión será mediante SSH. En este puto es donde usaremos las credenciales que hemos creado en el paso previo  |
-| `Disponibilidad`          | `Keep this agent online ad much as possible`                           |
-
-A continuación se muestra una imagen donde se ilustra el resultado final de la configuración.
-
-![Agent configuration](doc/pics/config-slave.png)
-
-Cuando tengamos todo listo hacemos click en el botón `Guardar`. Jenkins tarda un poco en registrar el nuevo slave.
-
-Pasado un tiempo debería de aparecer nuestro nuevo slave listo para ser utilizado.
-
-A continuación se muestra un ejemplo donde se pueden ver la pinta que tienen varios slaves configurados.
-
-![Jenkins agents](doc/pics/jenkins-agents.png)
+ * Si hay cambios en las interfaces de red, hay que ajustar el fichero ```system-default.sh```. Concretamente las variables ```GBE_INTERFACE``` y ```IPOIB_INTERFACE```.
+ * Hay que ajustar la lista de direcciones ip del cluster. Para ello editamos el fichero ```hostfile``` donde indicaremos en primer lugar la IP del nodo master, y acontinuación las direcciones ip de los nodos slave.

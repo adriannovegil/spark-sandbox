@@ -52,7 +52,8 @@
             "scripts": [
                 "bootstrap.sh",
                 "ssh.sh",
-                "java.sh"
+                "java.sh",
+                "bde.sh"
             ]
         }
     }

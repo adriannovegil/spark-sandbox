@@ -17,6 +17,9 @@ rm -Rf bdev-3.0/experiment
 cp -R /vagrant/files/bdev/experiment ./bdev-3.0/
 cp -R /vagrant/files/bdev/etc ./bdev-3.0/
 
+# Create the scratch folder
+mkdir scratch
+
 # Get the framework to the test.
 
 echo "BDE Successfully Provisioned"

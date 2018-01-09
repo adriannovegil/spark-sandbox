@@ -2,7 +2,7 @@
 
 ## Configuration parameters regarding the host system characteristics
 
-export TMP_DIR=/scratch/$USER/$METHOD_NAME 	# Directory used to store tmp files in each node
+export TMP_DIR=/tmp/$USER/$METHOD_NAME 	# Directory used to store tmp files in each node
 export LOCAL_DIRS="" 		# List of directories used to store local data in each node
 export GBE_INTERFACE="enp0s8" 	# GbE interface to use in the nodes
 export IPOIB_INTERFACE="enp0s8" 	# IPoIB interface to use in the nodes
