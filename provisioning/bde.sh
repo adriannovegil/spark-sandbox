@@ -15,8 +15,8 @@ sudo chmod -R 777 /scratch/
 # Copy the configuration folder
 rm -Rf bdev-3.0/experiment
 cp -R /vagrant/files/bdev/experiment ./bdev-3.0/
+cp -R /vagrant/files/bdev/etc ./bdev-3.0/
 
 # Get the framework to the test.
-
 
 echo "BDE Successfully Provisioned"
