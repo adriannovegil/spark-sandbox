@@ -25,7 +25,8 @@
                 "bootstrap.sh",
                 "ssh.sh",
                 "java.sh",
-                "bde.sh"
+                "bde.sh",
+                "nfs-server.sh"
             ]
         },
         "bde-slave-01": {
@@ -53,7 +54,7 @@
                 "bootstrap.sh",
                 "ssh.sh",
                 "java.sh",
-                "bde.sh"
+                "nfs-client.sh"
             ]
         }
     }
