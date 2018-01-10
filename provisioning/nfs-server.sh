@@ -18,6 +18,8 @@ sudo systemctl start nfs-idmapd
 
 # Share the folder
 sudo sh -c "echo /home/vagrant/bdev-3.0 10.0.9.0/24\(rw,sync,no_root_squash\) >> /etc/exports"
+mkdir ~/BDEv_OUT
+sudo sh -c "echo /home/vagrant/BDEv_OUT 10.0.9.0/24\(rw,sync,no_root_squash\) >> /etc/exports"
 
 # Expor the mount point
 sudo exportfs -r

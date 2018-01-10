@@ -5,7 +5,7 @@ set -o errexit
 echo "Provisioning the Server"
 
 # Install software base
-sudo yum -y install nano wget curl zip bzip2 rpm-build psmisc mvapich2 papi oprofile gnuplot expect
+sudo yum -y install nano wget curl zip bzip2 rpm-build psmisc mvapich2 papi oprofile gnuplot expect bc
 
 # Install Git
 sudo yum -y install git

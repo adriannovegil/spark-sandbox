@@ -124,3 +124,9 @@ A continuación se muestran los comandos más típicos necesarios para la gesti�
 
  * Si hay cambios en las interfaces de red, hay que ajustar el fichero ```system-default.sh```. Concretamente las variables ```GBE_INTERFACE``` y ```IPOIB_INTERFACE```.
  * Hay que ajustar la lista de direcciones ip del cluster. Para ello editamos el fichero ```hostfile``` donde indicaremos en primer lugar la IP del nodo master, y acontinuación las direcciones ip de los nodos slave.
+
+## References
+
+ * http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0096732
+ * http://genomics.lbl.gov/?page_id=44
+ http://gingproc.iim.csic.es/MIDERmanual_v2_JAN2015.pdf

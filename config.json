@@ -7,7 +7,7 @@
             "box": "bento/centos-7.2",
             "timezone": "Europe/Madrid",
             "cpus": 1,
-            "memory": 2048,
+            "memory": 4096,
             "ssh-prv-key": "~/.ssh/id_rsa",
             "ssh-pub-key": "~/.ssh/id_rsa.pub",
             "network": {
@@ -36,7 +36,7 @@
             "box": "bento/centos-7.2",
             "timezone": "Europe/Madrid",
             "cpus": 1,
-            "memory": 2048,
+            "memory": 4096,
             "ssh-prv-key": "~/.ssh/id_rsa",
             "ssh-pub-key": "~/.ssh/id_rsa.pub",
             "network": {
