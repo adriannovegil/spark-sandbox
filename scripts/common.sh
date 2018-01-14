@@ -61,14 +61,6 @@ PIG_ARCHIVE=${PIG_RELEASE}.tar.gz
 PIG_MIRROR_DOWNLOAD=http://apache.mirror.anlx.net/pig/pig-${PIG_VERSION}/${PIG_ARCHIVE}
 PIG_RES_DIR=/vagrant/resources/pig
 
-# flume
-FLUME_VERSION=1.7.0
-FLUME_RELEASE=apache-flume-${FLUME_VERSION}-bin
-FLUME_ARCHIVE=${FLUME_RELEASE}.tar.gz
-FLUME_MIRROR_DOWNLOAD=http://www.mirrorservice.org/sites/ftp.apache.org/flume/${FLUME_VERSION}/${FLUME_ARCHIVE}
-#FLUME_MIRROR_DOWNLOAD=http://apache.mirror.anlx.net/flume/${FLUME_VERSION}/${FLUME_ARCHIVE}
-FLUME_RES_DIR=/vagrant/resources/flume
-
 # Utility functions
 function resourceExists {
 	FILE=/vagrant/resources/$1

@@ -12,7 +12,6 @@ Sandbox configuration:
 * mysql 5.7 (for hive metastore)
 * Sqoop 1.4.6
 * Pig 0.17.0
-* flume 1.7.0
 
 The virtual machine will be running the following services:
 
