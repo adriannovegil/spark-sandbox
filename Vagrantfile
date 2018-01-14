@@ -31,6 +31,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         node.vm.provision :shell, path: 'scripts/setup-pig.sh'
         node.vm.provision :shell, path: 'scripts/setup-sqoop.sh'
         node.vm.provision :shell, path: 'scripts/finalize-ubuntu.sh'
+        # If you restart your VM then the Hadoop/Spark/Hive services will be started by this script.
+        # Due to the config "node.vm.provision :shell, path: "scripts/bootstrap.sh", run: 'always'" on Vagrantfile
         node.vm.provision :shell, path: 'scripts/bootstrap.sh', run: 'always'
     end
 end

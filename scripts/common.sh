@@ -42,9 +42,6 @@ RES_SSH_COPYID_ORIGINAL=$SSH_RES_DIR/ssh-copy-id.original
 RES_SSH_COPYID_MODIFIED=$SSH_RES_DIR/ssh-copy-id.modified
 RES_SSH_CONFIG=$SSH_RES_DIR/config
 
-# vim
-VIM_RES_DIR=/vagrant/resources/vim
-
 # root password for mysql
 MYSQL_ROOT_PASSWORD=root
 
