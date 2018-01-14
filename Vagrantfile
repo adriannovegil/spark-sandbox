@@ -5,8 +5,10 @@ VAGRANTFILE_API_VERSION = '2'.freeze
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     i = 1
+
     config.vm.network :forwarded_port, guest: 8080, host: 8080
     config.vm.network :forwarded_port, guest: 9083, host: 9083
+
     config.vm.define "node#{i}" do |node|
         node.vm.box = 'ubuntu/xenial64'
         config.vm.define :node1 do |t|
@@ -15,8 +17,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
             v.name = "node#{i}"
             v.customize ['modifyvm', :id, '--memory', '8192']
         end
+
         node.vm.network :private_network, ip: '10.211.55.101'
+
         node.vm.hostname = 'node1'
+
         node.vm.provision :shell, path: 'scripts/setup-ubuntu.sh'
         node.vm.provision :shell, path: 'scripts/setup-java.sh'
         node.vm.provision :shell, path: 'scripts/setup-mysql.sh'

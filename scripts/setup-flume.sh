@@ -31,7 +31,6 @@ function installFlume {
 	ln -s /usr/local/$FLUME_RELEASE /usr/local/flume
 }
 
-
 echo "setup Flume"
 
 installFlume

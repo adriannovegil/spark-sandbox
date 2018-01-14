@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 source "/vagrant/scripts/common.sh"
 
 function setupEnvVars {
@@ -17,4 +16,5 @@ echo "stopspark"
 setupEnvVars
 stopServices
 jps
+
 echo "spark stop complete"

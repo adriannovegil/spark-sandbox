@@ -4,7 +4,7 @@ source "/vagrant/scripts/common.sh"
 
 function installLocalZeppelin {
 	echo "install apache Zeppelin from local file"
-	FILE=/vagrant/resources/$ZEPPELIN_ARCHIVE 
+	FILE=/vagrant/resources/$ZEPPELIN_ARCHIVE
 	tar -xzf $FILE -C ${ZEPPELIN_TARGET}
 }
 
@@ -18,7 +18,6 @@ function setupZeppelin {
 	echo "Setup additional Zeppelin interpreters "
 	${ZEPPELIN_TARGET}/zeppelin/bin/install-interpreter.sh --name md,shell,file,jdbc
 }
-
 
 function changeOwner {
 	echo "Changing owner of zeppelin directories"

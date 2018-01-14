@@ -18,7 +18,6 @@ function setupSwap {
     apt-get install -y swapspace
 }
 
-
 function installSSHPass {
 	apt-get update
 	apt-get install -y sshpass

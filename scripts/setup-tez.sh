@@ -38,7 +38,6 @@ function installTez {
 	ln -s /usr/local/$TEZ_RELEASE /usr/local/tez
 }
 
-
 echo "setup Tez"
 
 installTez

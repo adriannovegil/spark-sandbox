@@ -30,7 +30,6 @@ function installPig {
 	ln -s /usr/local/$PIG_RELEASE /usr/local/pig
 }
 
-
 echo "setup Pig"
 
 installPig

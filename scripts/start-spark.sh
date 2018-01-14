@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 source "/vagrant/scripts/common.sh"
 
 function setupEnvVars {
@@ -18,4 +17,5 @@ echo "setup spark"
 setupEnvVars
 startServices
 jps
+
 echo "spark start complete"
