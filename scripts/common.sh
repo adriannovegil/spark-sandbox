@@ -54,13 +54,6 @@ SQOOP_ARCHIVE=${SQOOP_RELEASE}.tar.gz
 SQOOP_MIRROR_DOWNLOAD=http://mirror.ox.ac.uk/sites/rsync.apache.org/sqoop/1.4.6/${SQOOP_ARCHIVE}
 SQOOP_RES_DIR=/vagrant/resources/sqoop
 
-# Tez
-TEZ_VERSION=0.8.5
-TEZ_RELEASE=apache-tez-${TEZ_VERSION}-bin
-TEZ_ARCHIVE=${TEZ_RELEASE}.tar.gz
-TEZ_MIRROR_DOWNLOAD=http://mirror.catn.com/pub/apache/tez/${TEZ_VERSION}/${TEZ_ARCHIVE}
-TEZ_RES_DIR=/vagrant/resources/tez
-
 # Pig
 PIG_VERSION=0.17.0
 PIG_RELEASE=pig-${PIG_VERSION}

@@ -10,7 +10,6 @@ Sandbox configuration:
 * Hive 1.2.2
 * Spark 2.1.1
 * mysql 5.7 (for hive metastore)
-* Tez 0.8.5
 * Sqoop 1.4.6
 * Pig 0.17.0
 * flume 1.7.0
@@ -47,7 +46,6 @@ After the ```vagrant up``` command has completed, you'll have a Ubuntu virtual m
 * Hadoop YARN
 * Hive
 * Spark
-* Hive on Tez
 
 Let's take a look at each one and validate that it's installed and setup as expected.
 
@@ -100,12 +98,6 @@ LOCATION '/user/ubuntu/wordcount-output';
 select * from wordcount order by count;
 ```
 
-To run the same query using Tez: -
-
-```
-set hive.execution.engine=tez;
-```
-
 Next launch the interactive Spark shell.
 
 ```
@@ -126,26 +118,6 @@ sc.textFile("hdfs:///user/ubuntu/wordcount-input/hello.txt")
 <ctrl-D>
 
 sc.stop
-```
-
-## Map Reduce - Tez
-
-By default map reduce jobs will be executed via Tez to change this to standard MR, change the following parameter in $HADOOP_CONF/mapred-site.xml from: -
-
-```xml
-    <property>
-        <name>mapreduce.framework.name</name>
-        <value>yarn-tez</value>
-    </property>
-```
-
-to
-
-```xml
-    <property>
-        <name>mapreduce.framework.name</name>
-        <value>yarn</value>
-    </property>
 ```
 
 ## Web user interfaces
