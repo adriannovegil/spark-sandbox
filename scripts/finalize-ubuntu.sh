@@ -23,6 +23,7 @@ function setupUtilities {
 #}
 
 echo "finalize ubuntu"
+
 setupUtilities
 #echo "setup vim"
 #setupVIM

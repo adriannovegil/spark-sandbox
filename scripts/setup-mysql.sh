@@ -7,8 +7,8 @@ function installMysql {
 	echo debconf mysql-server/root_password password $MYSQL_ROOT_PASSWORD | debconf-set-selections
 	echo debconf mysql-server/root_password_again password $MYSQL_ROOT_PASSWORD | debconf-set-selections
 	apt-get update
-	apt-get -qq install mysql-server 
-	apt-get -qq install expect 
+	apt-get -qq install mysql-server
+	apt-get -qq install expect
 	tee ~/mysql.sh << EOF
 	spawn $(which mysql_secure_installation)
 	expect "Enter password for user root:"
@@ -54,5 +54,8 @@ function setupMysql {
 }
 
 echo "setup mysql"
+
 installMysql
 setupMysql
+
+echo "mysql setup complete"
