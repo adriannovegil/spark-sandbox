@@ -1,132 +1,156 @@
-# SparkPremer-BDE Sandbox
+Vagrant for Hadoop, Spark and Hive
+==================================
 
-Proyecto para aprovisionar un entorno de pruebas para el desarrollo del algoritmo SparPremer.
+# Introduction
 
-## Compatibilidad
+Vagrant project to spin up a single virtual machine running:
 
- * [CentOS 7](https://www.centos.org/)
- * [BDEv3](http://bdev.des.udc.es/)
+* Hadoop 2.7.3
+* Hive 1.2.2
+* Spark 2.1.1
+* mysql 5.7 (for hive metastore)
+* Tez 0.8.5
+* Sqoop 1.4.6
+* Pig 0.17.0
+* flume 1.7.0
+* Zeppelin 0.7.2 (with Spark/scala, md, file and JDBC interpreters)
 
-## Creando el Sandbox
+The virtual machine will be running the following services:
 
-Lo primero que tenemos que hacer es clonar este repositório.
+* HDFS NameNode + DataNode
+* YARN ResourceManager/NodeManager + JobHistoryServer + ProxyServer
+* Hive metastore and server2
+* Spark history server
+* mysql
+* zeppelin notebook server (not started by default - see below)
 
-```
- $ git clone [REPO_URL]
-```
+# Getting Started
 
-## Configuramos el Entorno
+1. [Download and install VirtualBox](https://www.virtualbox.org/wiki/Downloads)
+2. [Download and install Vagrant](http://www.vagrantup.com/downloads.html).
+3. Go to [releases](https://github.com/martinprobson/vagrant-hadoop-hive-spark/releases) and download and extract the latest source of this project.
+5. In your terminal change your directory into the project directory (i.e. `cd vagrant-hadoop-spark-hive-<version>`).
+6. Run ```vagrant up``` to create the VM (**NOTE** *This will take a while the first time as many dependancies are downloaded - subsequent deployments will be quicker as dependancies are cached in the `resources` directory*).
+7. Execute ```vagrant ssh``` to login to the VM.
 
-Creamos el fichero ```config```. Podemos hacerlo copiando el fichero de template que acompaña al proyecto.
 
-```
- $ cp config.json.template config.json
-```
+# Map Reduce - Tez
 
-Una vez que hemos creado nuestro fichero podemos llevar a cabo la configuración de nuestro servidor.
+By default map reduce jobs will be executed via Tez to change this to standard MR, change the following parameter in $HADOOP_CONF/mapred-site.xml from: -
 
-A continuación se pueden ver las principales opciones de configuración disponibles.
-
-### Configuración General
-
-```
-"bde-master": {
-    "enabled": true,
-    "guest-hostname": "bde-master.vm.server",
-    "group": "PREMER-BDE Sandbox",
-    "box": "bento/centos-7.2",
-    "timezone": "Europe/Madrid",
-    "cpus": 1,
-    "memory": 2048,
-    "ssh-prv-key": "~/.ssh/id_rsa",
-    "ssh-pub-key": "~/.ssh/id_rsa.pub",
-    "network": {
-      "interfaces": [
-        {
-          "network-type": "private",
-          "if-adapter": "eth1",
-          "if-inet-type": "static",
-          "if-address": "10.0.9.20",
-          "if-netmask": "255.255.0.0"
-        }
-      ]
-    },
-    "scripts": [
-        "bootstrap.sh",
-        "ssh.sh",
-        "java.sh",
-        "bde.sh"
-    ]
-},
+```xml
+    <property>
+        <name>mapreduce.framework.name</name>
+        <value>yarn-tez</value>
+    </property>
 ```
 
-| Parámetro             |  Valor(es)                                                        |
-| --------------------- | ----------------------------------------------------------------- |
-| `enabled`             | `true` si queremos que Vagrant cree la instancia, en caso contrario ignora el bloque de configuración. Esto se usa sobre todo cuando aprovisionamos más de una máquina desde el mismo repositorio         |
-| `guest-hostname`      | Hostname de la instancia                                          |
-| `group`               | Si queremos agrupar las instancias. En VirtualBox esta opción se traduce en que las máquinas virtuales que tengan este label se agruparan juntas |
-| `box`                 | Vagrant Box                                                       |
-| `timezone`            | Server timezone                                                   |
-| `cpus`                | Número de CPUs de la instancia                                    |
-| `memory`              | Cantidad de memoria de la instancia                              |
-| `ssh-prv-key`         | Clave privada para acceder a la instancia. Si no indicamos nada, Vagrant intenta inyectar una clave por defecto                         |
-| `ssh-pub-key`         | Clave pública para acceder a la instancia. Si no indicamos nada, Vagrant intenta inyectar una clave por defecto                         |
-| `scripts`             | Listado de scripts que queremos utilizar en la etapa de provisioning  |
+to
 
-### Configuración de Red
-
-A continuación se muestran los parámetros más habituales para la configuración de red.
-
-```
-"network": {
-  "interfaces": [
-    {
-      "network-type": "private",
-      "if-adapter": "eth1",
-      "if-inet-type": "static",
-      "if-address": "10.0.8.20",
-      "if-netmask": "255.255.0.0"
-    }
-  ]
-},
+```xml
+    <property>
+        <name>mapreduce.framework.name</name>
+        <value>yarn</value>
+    </property>
 ```
 
-| Parámetro             |  Valor(es)                                                        |
-| --------------------- | ----------------------------------------------------------------- |
-| `network-type`        | `Private` ó `Public` [Vagrant documentation](https://www.vagrantup.com/docs/getting-started/networking.html) |
-| `if-adapter`          | El nombre del adaptador de red, p.e. eth0, eth1, etc.    |
-| `if-inet-type`        | `static` ó nada. [Vagrant documentation](https://www.vagrantup.com/docs/getting-started/networking.html) |
-| `if-address`          | Dirección ip que queremos asignar a la interfaz                   |
-| `if-netmask`          | Mascara de red                                                    |
-| `bridge-adapter`      | Modo de configuración de la interfaz. [Vagrant documentation](https://www.vagrantup.com/docs/networking/public_network.html)    |
+# Web user interfaces
 
-## Arrancando la Instancia
+Here are some useful links to navigate to various UI's:
 
-Una vez que tenemos el entorno configurado, podemos ejecutar la instancia ejecutando el siguiente comando:
+* YARN resource manager:  (http://10.211.55.101:8088)
+* Job history:  (http://10.211.55.101:19888/jobhistory/)
+* HDFS: (http://10.211.55.101:50070/dfshealth.html)
+* Spark history server: (http://10.211.55.101:18080)
+* Spark context UI (if a Spark context is running): (http://10.211.55.101:4040)
+* Zeppelin notebook (if notebook server is started) (http://10.211.55.101:8080)
+
+# Apache Zeppelin notebook server
+
+Apache Zeppelin together with spark, md, file and JDBC interpreters is installed by default but not
+started. To manually start the zeppelin daemon run: -
 
 ```
- $ vagrant up
+vagrant ssh
+zeppelin-daemon.sh start
 ```
 
-## Administrando la Instancia
+as `ubuntu` user from the command line.
 
-A continuación se muestran los comandos más típicos necesarios para la gestión de las instancias.
 
-| Comando                              |  Descripción                                      |
-| ------------------------------------ | ------------------------------------------------- |
-| `$ vagrant status`                   | Ver el estado de la instancia                     |
-| `$ vagrant ssh [instance-id]`        | Conectarse a la instancia via SSH                 |
-| `$ vagrant suspend [instance-id]`    | Suspender la instancia                            |
-| `$ vagrant halt [instance-id]`       | Parar la instancia                                |
-| `$ vagrant destroy [instance-id]`    | Destruir la instancia                             |
+Notebook server can then be accessed via `http://10.211.55.101:8080`.
 
-## Configuración del framework BDEv3
+# Mysql
 
- * Si hay cambios en las interfaces de red, hay que ajustar el fichero ```system-default.sh```. Concretamente las variables ```GBE_INTERFACE``` y ```IPOIB_INTERFACE```.
- * Hay que ajustar la lista de direcciones ip del cluster. Para ello editamos el fichero ```hostfile``` donde indicaremos en primer lugar la IP del nodo master, y acontinuación las direcciones ip de los nodos slave.
+mysql database connection
 
-## References
+* `root@10.211.55.101:3306` (for root DBA access - password is 'root')
+* `hive@10.211.55.101:3306` (for hive metastore user - password is 'hive')
 
- * http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0096732
- * http://genomics.lbl.gov/?page_id=44
- http://gingproc.iim.csic.es/MIDERmanual_v2_JAN2015.pdf
+# Shared Folder
+
+Vagrant automatically mounts the folder containing the Vagrant file from the host machine into
+the guest machine as `/vagrant` inside the guest.
+
+
+# Validating your virtual machine setup
+
+To test out the virtual machine setup, and for examples of how to run
+MapReduce, Hive and Spark, head on over to [VALIDATING.md](VALIDATING.md).
+
+
+# Managment of Vagrant VM
+
+To stop the VM and preserve all setup/data within the VM: -
+
+```
+vagrant halt
+```
+
+or
+
+```
+vagrant suspend
+```
+
+Issue a `vagrant up` command again to restart the VM from where you left off.
+
+To completely **wipe** the VM so that `vagrant up` command gives you a fresh machine: -
+
+```
+vagrant destroy
+```
+
+Then issue `vagrant up` command as usual.
+
+# To shutdown services cleanly
+
+```
+$ vagrant ssh
+$ sudo -sE
+$ /vagrant/scripts/stop-spark.sh
+$ /vagrant/scripts/stop-hadoop.sh
+$ systemctl stop mysql.service
+
+```
+
+# Swapspace - Memory
+
+Spark in particular needs quite a bit of memory to run - to work around this a `swapspace` daemon is also configured and
+started that uses normal disk to dynamically allocate swapspace when memory is low.
+
+# More advanced setup
+
+If you'd like to learn more about working and optimizing Vagrant then
+take a look at [ADVANCED.md](ADVANCED.md).
+
+# For developers
+
+The file [DEVELOP.md](DEVELOP.md) contains some tips for developers.
+
+# Credits
+
+Thanks to [Alex Holmes](https://github.com/alexholmes) for the great work at
+(https://github.com/alexholmes/vagrant-hadoop-spark-hive)
+
+[Matheus Cunha](https://github.com/matheuscunha)
