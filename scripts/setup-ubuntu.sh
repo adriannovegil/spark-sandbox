@@ -41,6 +41,7 @@ function setupUtilities {
     apt-get install -y ant
     apt-get install -y unzip
     apt-get install -y python-minimal
+		apt-get install -y build-essential
 }
 
 echo "setup ubuntu"
