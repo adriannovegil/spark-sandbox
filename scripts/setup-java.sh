@@ -25,9 +25,15 @@ function installJava {
 	installRemoteJava
 }
 
+function installMaven {
+	echo "install Maven 3"
+	apt-get install -y maven
+}
+
 echo "setup java"
 
 installJava
+installMaven
 setupEnvVars
 setupMysqlConnector
 
