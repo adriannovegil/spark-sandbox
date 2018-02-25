@@ -3,6 +3,8 @@
 sparkpremer
 sparkpremer-file-loader
 apache-spark-examples
+apache-spark-examples-java
+apache-spark-examples-scala
 orig
 
 # Compiled source #

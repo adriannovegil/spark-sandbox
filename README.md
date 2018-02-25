@@ -1,8 +1,8 @@
-# SparkPremer Sandbox
+# Apache Spark Sandbox
 
 ## Introduction
 
-Vagrant project to spin up a single virtual machine running to test the SparkPremer algorithm:
+Vagrant project to spin up a single virtual machine running to test experiments using Apache Spark:
 
 Sandbox configuration:
 
