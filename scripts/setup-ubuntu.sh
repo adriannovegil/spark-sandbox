@@ -41,7 +41,10 @@ function setupUtilities {
     apt-get install -y ant
     apt-get install -y unzip
     apt-get install -y python-minimal
-		apt-get install -y build-essential
+    apt-get install -y build-essential
+    apt-get install -y htop
+    apt-get install -y gfortran
+    apt-get install -y octave
 }
 
 echo "setup ubuntu"
